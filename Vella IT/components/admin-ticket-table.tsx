@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+import { toast } from 'sonner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -10,6 +12,7 @@ import type { TicketSummary } from '@/types/ticket'
 
 export function AdminTicketTable({ tickets }: { tickets: TicketSummary[] }) {
   const router = useRouter()
+  const [pendingTicketId, startTransition] = useTransition()
 
   async function handleViewAsUser(userId: string, ticketId: string) {
     try {
@@ -25,6 +28,34 @@ export function AdminTicketTable({ tickets }: { tickets: TicketSummary[] }) {
       router.push(`/dashboard/tickets/${ticketId}`)
     }
   }
+
+  function handleCloseTicket(ticketId: string) {
+    startTransition(async () => {
+      try {
+        const response = await fetch(`/api/tickets/${ticketId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ status: 'Closed' }),
+        })
+
+        const payload = await response.json()
+
+        if (!response.ok) {
+          toast.error(payload.error || 'Unable to close ticket')
+          return
+        }
+
+        toast.success(`Ticket ${payload.ticket.ticket_number} closed`)
+        router.refresh()
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unable to close ticket'
+        toast.error(message)
+      }
+    })
+  }
+
   return (
     <Card className="border-slate-200/80 dark:border-slate-800">
       <CardContent className="p-0">
@@ -53,10 +84,18 @@ export function AdminTicketTable({ tickets }: { tickets: TicketSummary[] }) {
                 </TableCell>
                 <TableCell className="text-right space-x-2">
                   <Button asChild variant="outline" size="sm">
-                    <Link href={`/dashboard/tickets/${ticket.id}`}>Open</Link>
+                    <Link href={`/dashboard/tickets/${ticket.id}`}>View Ticket</Link>
                   </Button>
                   <Button variant="ghost" size="sm" onClick={() => handleViewAsUser(ticket.created_by, ticket.id)}>
                     View as User
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => handleCloseTicket(ticket.id)}
+                    disabled={ticket.status === 'Closed' || pendingTicketId}
+                  >
+                    {ticket.status === 'Closed' ? 'Closed' : 'Close Ticket'}
                   </Button>
                 </TableCell>
               </TableRow>

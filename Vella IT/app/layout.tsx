@@ -9,6 +9,11 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'VELLA IT SUPPORT',
   description: 'Enterprise IT ticketing system for VELLA IT SUPPORT.',
+  icons: {
+    icon: '/Asset 1.png',
+    shortcut: '/Asset 1.png',
+    apple: '/Asset 1.png',
+  },
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

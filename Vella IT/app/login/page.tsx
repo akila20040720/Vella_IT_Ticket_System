@@ -2,6 +2,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 import { LoginCard } from '@/components/login-card'
 import { EmailLoginCard } from '@/components/email-login-card'
 import { Badge } from '@/components/ui/badge'
+import Image from 'next/image'
 import { supportHighlights } from '@/utils/ticket-options'
 
 export default function LoginPage() {
@@ -9,9 +10,12 @@ export default function LoginPage() {
 		<main className="ticket-gradient min-h-screen">
 			<div className="mx-auto grid min-h-screen max-w-7xl items-center gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8">
 				<section className="space-y-8">
-					<Badge variant="secondary" className="w-fit px-3 py-1 text-xs uppercase tracking-[0.3em]">
-						VELLA IT SUPPORT
-					</Badge>
+					<div className="flex items-center gap-4">
+						<Image src="/Asset 1.png" alt="Vella IT Support" width={180} height={68} className="h-12 w-auto" priority />
+						<Badge variant="secondary" className="w-fit px-3 py-1 text-xs uppercase tracking-[0.3em]">
+							IT SUPPORT
+						</Badge>
+					</div>
 					<div className="max-w-2xl space-y-4">
 						<h1 className="text-4xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
 							Vella IT Support built for fast action and clear accountability.
