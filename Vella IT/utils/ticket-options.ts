@@ -39,8 +39,5 @@ export const priorityOptions = ['L1', 'L2', 'L3'] as const
 export const statusOptions = ['Open', 'Assigned', 'In Progress', 'Waiting User', 'Resolved', 'Closed'] as const
 
 export const supportHighlights = [
-  'Microsoft Entra ID sign-in',
-  'Supabase auth, storage, and RLS',
-  'ITSM workflow and analytics',
-  'Serverless deployment on Vercel',
+ 
 ] as const

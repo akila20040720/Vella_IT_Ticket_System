@@ -68,11 +68,7 @@ export function TicketCreateForm() {
           <Select name="severity" defaultValue="Medium" required>
             {severityOptions.map((option) => <option key={option} value={option}>{option}</option>)}
           </Select>
-          <Select name="priority" defaultValue="L2" required>
-            {priorityOptions.map((option) => <option key={option} value={option}>{option}</option>)}
-          </Select>
           <Input name="completionTargetHours" type="number" min={1} max={720} defaultValue={24} required />
-          <Textarea name="description" placeholder="Issue description" className="md:col-span-2" required />
           <div className="md:col-span-2 flex justify-end gap-3">
             <Button type="submit" disabled={pending}>
               {pending ? 'Submitting...' : 'Submit Ticket'}

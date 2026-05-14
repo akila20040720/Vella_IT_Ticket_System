@@ -13,7 +13,7 @@ export default function HomePage() {
           </Badge>
           <div className="max-w-2xl space-y-4">
             <h1 className="text-4xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
-              Vella IT ticketing built for fast action and clear accountability.
+              Vella IT Support built for fast action and clear accountability.
             </h1>
             <p className="max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
               Microsoft Entra ID sign-in, secure Supabase data services, workflow-driven dashboards, and role-aware controls for employees and the IT team.
@@ -25,7 +25,7 @@ export default function HomePage() {
               <Card key={highlight} className="border-white/40 bg-white/70 backdrop-blur dark:border-slate-800 dark:bg-slate-950/70">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-sm">{highlight}</CardTitle>
-                  <CardDescription>Designed for a production ITSM workflow on Vercel.</CardDescription>
+                  <CardDescription>Designed for a production Vella ITSM workflow</CardDescription>
                 </CardHeader>
               </Card>
             ))}
