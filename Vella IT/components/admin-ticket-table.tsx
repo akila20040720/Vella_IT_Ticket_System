@@ -1,18 +1,20 @@
 "use client"
 
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { AdminTicketDetailModal } from '@/components/admin-ticket-detail-modal'
 import type { TicketSummary } from '@/types/ticket'
 
 export function AdminTicketTable({ tickets }: { tickets: TicketSummary[] }) {
   const router = useRouter()
   const [pendingTicketId, startTransition] = useTransition()
+  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null)
 
   async function handleViewAsUser(userId: string, ticketId: string) {
     try {
@@ -57,7 +59,8 @@ export function AdminTicketTable({ tickets }: { tickets: TicketSummary[] }) {
   }
 
   return (
-    <Card className="border-slate-200/80 dark:border-slate-800">
+    <>
+      <Card className="border-slate-200/80 dark:border-slate-800">
       <CardContent className="p-0">
         <Table>
           <TableHeader>
@@ -83,8 +86,12 @@ export function AdminTicketTable({ tickets }: { tickets: TicketSummary[] }) {
                   <Badge variant={ticket.status === 'Closed' ? 'success' : 'secondary'}>{ticket.status}</Badge>
                 </TableCell>
                 <TableCell className="text-right space-x-2">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href={`/dashboard/tickets/${ticket.id}`}>View Ticket</Link>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setSelectedTicketId(ticket.id)}
+                  >
+                    View Details
                   </Button>
                   <Button variant="ghost" size="sm" onClick={() => handleViewAsUser(ticket.created_by, ticket.id)}>
                     View as User
@@ -110,5 +117,11 @@ export function AdminTicketTable({ tickets }: { tickets: TicketSummary[] }) {
         </Table>
       </CardContent>
     </Card>
+
+    <AdminTicketDetailModal
+      ticketId={selectedTicketId}
+      onClose={() => setSelectedTicketId(null)}
+    />
+  </>
   )
 }
